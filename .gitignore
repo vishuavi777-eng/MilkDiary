@@ -1,0 +1,94 @@
+# ==========================
+# Build system
+# ==========================
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# In case submodules/plugins have nested build dirs
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# ==========================
+# IntelliJ IDEA
+# ==========================
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# ==========================
+# Eclipse
+# ==========================
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# ==========================
+# NetBeans
+# ==========================
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ==========================
+# VS Code
+# ==========================
+.vscode/
+
+# ==========================
+# OS specific
+# ==========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==========================
+# Logs / Temp
+# ==========================
+*.log
+*.tmp
+*.swp
+
+# ==========================
+# Java Artifacts
+# ==========================
+*.class
+*.jar
+*.war
+*.ear
+
+# ==========================
+# Reports / Coverage
+# ==========================
+jacoco.exec
+/site/
+.coverage/
+
+# ==========================
+# Local env / Secrets
+# ==========================
+.env
+.env.*
+*.key
+*.pem
+*.keystore
+*.jks
+
+# ==========================
+# Generated app output
+# ==========================
+reports/
+generated/
