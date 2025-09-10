@@ -40,6 +40,9 @@ public class MonthlyBill {
     @Column(name = "adjustments_total", precision=14, scale=2)
     private BigDecimal adjustmentsTotal;
 
+    @Column(name = "savings_amount", precision=14, scale=2)
+    private BigDecimal savingsAmount;
+
     @Column(name = "net_amount", precision=14, scale=2)
     private BigDecimal netAmount;
 
@@ -68,6 +71,7 @@ public class MonthlyBill {
     public BigDecimal getAvgSnf() { return avgSnf; }
     public BigDecimal getGrossAmount() { return grossAmount; }
     public BigDecimal getAdjustmentsTotal() { return adjustmentsTotal; }
+    public BigDecimal getSavingsAmount() { return savingsAmount; }
     public BigDecimal getNetAmount() { return netAmount; }
     public BigDecimal getRoundOff() { return roundOff; }
     public boolean isLocked() { return locked; }
@@ -84,6 +88,7 @@ public class MonthlyBill {
     public void setAvgSnf(BigDecimal avgSnf) { this.avgSnf = avgSnf; }
     public void setGrossAmount(BigDecimal grossAmount) { this.grossAmount = grossAmount; }
     public void setAdjustmentsTotal(BigDecimal adjustmentsTotal) { this.adjustmentsTotal = adjustmentsTotal; }
+    public void setSavingsAmount(BigDecimal savingsAmount) { this.savingsAmount = savingsAmount; }
     public void setNetAmount(BigDecimal netAmount) { this.netAmount = netAmount; }
     public void setRoundOff(BigDecimal roundOff) { this.roundOff = roundOff; }
     public void setLocked(boolean locked) { this.locked = locked; }

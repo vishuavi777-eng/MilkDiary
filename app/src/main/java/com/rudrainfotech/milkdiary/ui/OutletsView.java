@@ -4,6 +4,7 @@ import com.rudrainfotech.milkdiary.entity.Outlet;
 import com.rudrainfotech.milkdiary.i18n.I18n;
 import com.rudrainfotech.milkdiary.service.AppSettingsService;
 import com.rudrainfotech.milkdiary.service.OutletService;
+import java.math.BigDecimal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -53,7 +54,15 @@ public class OutletsView extends BorderPane {
         cGstin.setCellValueFactory(new PropertyValueFactory<>("gstin"));
         cGstin.setPrefWidth(140);
 
-        table.getColumns().addAll(cName, cOwner, cPhone, cGstin);
+        TableColumn<Outlet, BigDecimal> cCowSav = new TableColumn<>("Cow Saving/L");
+        cCowSav.setCellValueFactory(new PropertyValueFactory<>("cowSavingPerLitre"));
+        cCowSav.setPrefWidth(120);
+
+        TableColumn<Outlet, BigDecimal> cBuffSav = new TableColumn<>("Buffalo Saving/L");
+        cBuffSav.setCellValueFactory(new PropertyValueFactory<>("buffaloSavingPerLitre"));
+        cBuffSav.setPrefWidth(140);
+
+        table.getColumns().addAll(cName, cOwner, cPhone, cGstin, cCowSav, cBuffSav);
         table.setItems(rows);
         table.setPlaceholder(new Label("No outlets yet. Click Add."));
         setCenter(table);
@@ -92,6 +101,8 @@ public class OutletsView extends BorderPane {
         copy.setPhone(sel.getPhone());
         copy.setAddress(sel.getAddress());
         copy.setGstin(sel.getGstin());
+        copy.setCowSavingPerLitre(sel.getCowSavingPerLitre());
+        copy.setBuffaloSavingPerLitre(sel.getBuffaloSavingPerLitre());
 
         OutletDialog dlg = new OutletDialog(copy);
         Outlet res = dlg.showAndWait().orElse(null);

@@ -127,6 +127,10 @@ public class MonthlyBillingView extends BorderPane implements StandardActions {
         cGross.setCellValueFactory(new PropertyValueFactory<>("grossAmount"));
         cGross.setPrefWidth(90);
 
+        TableColumn<MonthlyBill, ?> cSaving = new TableColumn<>("Saving");
+        cSaving.setCellValueFactory(new PropertyValueFactory<>("savingsAmount"));
+        cSaving.setPrefWidth(90);
+
         TableColumn<MonthlyBill, ?> cAdj = new TableColumn<>("Adjustments");
         cAdj.setCellValueFactory(new PropertyValueFactory<>("adjustmentsTotal"));
         cAdj.setPrefWidth(100);
@@ -143,7 +147,7 @@ public class MonthlyBillingView extends BorderPane implements StandardActions {
         cLocked.setCellValueFactory(new PropertyValueFactory<>("locked"));
         cLocked.setPrefWidth(70);
 
-        table.getColumns().addAll(cCode, cName, cLit, cFat, cSnf, cGross, cAdj, cRO, cNet, cLocked, cSpecies);
+        table.getColumns().addAll(cCode, cName, cLit, cFat, cSnf, cGross, cSaving, cAdj, cRO, cNet, cLocked, cSpecies);
         table.setItems(rows);
         table.setPlaceholder(new Label("Click Load or Generate All"));
         setCenter(table);
