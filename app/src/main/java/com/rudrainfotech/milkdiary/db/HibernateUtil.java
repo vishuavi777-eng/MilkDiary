@@ -39,6 +39,9 @@ public final class HibernateUtil {
                 .addAnnotatedClass(com.rudrainfotech.milkdiary.entity.AppSetting.class)
                 .addAnnotatedClass(com.rudrainfotech.milkdiary.entity.CapLock.class)
                 .addAnnotatedClass(com.rudrainfotech.milkdiary.entity.AuditLog.class)
+                .addAnnotatedClass(com.rudrainfotech.milkdiary.entity.SavingPeriod.class)
+                .addAnnotatedClass(com.rudrainfotech.milkdiary.entity.MemberSaving.class)
+                .addAnnotatedClass(com.rudrainfotech.milkdiary.entity.SavingPeriod.class)
                 .buildMetadata()
                 .buildSessionFactory();
     }

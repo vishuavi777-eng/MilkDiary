@@ -29,7 +29,7 @@ public class AppShell extends BorderPane {
     private final PseudoClass PC_SELECTED = PseudoClass.getPseudoClass("selected");
 
     // keep handles if you want to setSelected programmatically
-    private ToggleButton dailyBtn, membersBtn, rateBtn, monthBtn, outletSumBtn, outletsBtn;
+    private ToggleButton dailyBtn, membersBtn, rateBtn, monthBtn, savingsBtn, outletSumBtn, outletsBtn;
 
     public AppShell() {
         // 1) Locale from settings
@@ -112,11 +112,12 @@ public class AppShell extends BorderPane {
         membersBtn   = makeNavToggle(I18n.t("menu.members"));
         rateBtn      = makeNavToggle(I18n.t("menu.ratePlans"));
         monthBtn     = makeNavToggle(I18n.t("menu.billing"));
+        savingsBtn   = makeNavToggle(I18n.t("menu.savings"));
         outletSumBtn = makeNavToggle(I18n.t("menu.outletSummary"));
         outletsBtn   = makeNavToggle(I18n.t("menu.outlets"));
 
         // put them in one ToggleGroup so only one can be selected
-        for (var b : new ToggleButton[]{ dailyBtn, membersBtn, rateBtn, monthBtn, outletSumBtn, outletsBtn }) {
+        for (var b : new ToggleButton[]{ dailyBtn, membersBtn, rateBtn, monthBtn, savingsBtn, outletSumBtn, outletsBtn }) {
             b.setToggleGroup(navGroup);
         }
 
@@ -126,6 +127,7 @@ public class AppShell extends BorderPane {
         routes.put(membersBtn,   () -> { openMembersForActiveOutlet(); return getCenter(); }); // special
         routes.put(rateBtn,      RatePlansView::new);
         routes.put(monthBtn,     MonthlyBillingView::new);
+        routes.put(savingsBtn,   FinancialPeriodView::new);
         routes.put(outletSumBtn, OutletSummaryView::new);
         routes.put(outletsBtn,   OutletsView::new);
 
@@ -147,6 +149,7 @@ public class AppShell extends BorderPane {
         membersBtn.setTooltip(new Tooltip(I18n.t("menu.members")));
         rateBtn.setTooltip(new Tooltip(I18n.t("menu.ratePlans")));
         monthBtn.setTooltip(new Tooltip(I18n.t("menu.billing")));
+        savingsBtn.setTooltip(new Tooltip(I18n.t("menu.savings")));
         outletSumBtn.setTooltip(new Tooltip(I18n.t("menu.outletSummary")));
         outletsBtn.setTooltip(new Tooltip(I18n.t("menu.outlets")));
 
@@ -169,6 +172,7 @@ public class AppShell extends BorderPane {
                 membersBtn,
                 rateBtn,
                 monthBtn,
+                savingsBtn,
                 outletSumBtn,
                 outletsBtn,
                 sep2,

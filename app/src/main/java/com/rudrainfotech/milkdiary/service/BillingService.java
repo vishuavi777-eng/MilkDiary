@@ -110,10 +110,16 @@ public class BillingService {
         bill.setAvgSnf(avgSnf);
         bill.setGrossAmount(gross);
 
+        BigDecimal prevSaving = nz(bill.getSavingsAmount());
         BigDecimal saving = cowQty.multiply(nz(outlet.getCowSavingPerLitre()))
                 .add(buffaloQty.multiply(nz(outlet.getBuffaloSavingPerLitre())));
         saving = saving.setScale(2, RoundingMode.HALF_UP);
         bill.setSavingsAmount(saving);
+
+        BigDecimal deltaSaving = saving.subtract(prevSaving);
+        if (deltaSaving.signum() != 0) {
+            new SavingPeriodService().addSaving(member, deltaSaving);
+        }
 
         // adjustments sum
         MonthlyBill finalBill1 = bill;
