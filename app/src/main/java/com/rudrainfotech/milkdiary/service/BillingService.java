@@ -74,6 +74,8 @@ public class BillingService {
         }
 
         BigDecimal qty = BigDecimal.ZERO;
+        BigDecimal cowQty = BigDecimal.ZERO;
+        BigDecimal buffaloQty = BigDecimal.ZERO;
         BigDecimal fatQty = BigDecimal.ZERO;
         BigDecimal snfQty = BigDecimal.ZERO;
         BigDecimal gross = BigDecimal.ZERO;
@@ -81,6 +83,8 @@ public class BillingService {
         for (DailyMilkEntry e : entries) {
             BigDecimal q = nz(e.getQtyLitre());
             qty = qty.add(q);
+            if (e.getSpecies() == Species.COW) cowQty = cowQty.add(q);
+            if (e.getSpecies() == Species.BUFFALO) buffaloQty = buffaloQty.add(q);
             if (e.getFatPct()!=null) fatQty = fatQty.add(e.getFatPct().multiply(q));
             if (e.getSnfPct()!=null) snfQty = snfQty.add(e.getSnfPct().multiply(q));
             gross = gross.add(nz(e.getAmount()));
@@ -106,6 +110,11 @@ public class BillingService {
         bill.setAvgSnf(avgSnf);
         bill.setGrossAmount(gross);
 
+        BigDecimal saving = cowQty.multiply(nz(outlet.getCowSavingPerLitre()))
+                .add(buffaloQty.multiply(nz(outlet.getBuffaloSavingPerLitre())));
+        saving = saving.setScale(2, RoundingMode.HALF_UP);
+        bill.setSavingsAmount(saving);
+
         // adjustments sum
         MonthlyBill finalBill1 = bill;
         BigDecimal adjTotal = (bill.getId() == null)
@@ -122,7 +131,7 @@ public class BillingService {
 
         bill.setAdjustmentsTotal(adjTotal.setScale(2, RoundingMode.HALF_UP));
 
-        BigDecimal preRound = gross.add(bill.getAdjustmentsTotal());
+        BigDecimal preRound = gross.subtract(saving).add(bill.getAdjustmentsTotal());
         BigDecimal rounded = preRound.setScale(0, RoundingMode.HALF_UP); // nearest rupee
         BigDecimal roundOff = rounded.subtract(preRound).setScale(2, RoundingMode.HALF_UP);
         bill.setRoundOff(roundOff);
@@ -158,7 +167,9 @@ public class BillingService {
                     .reduce(BigDecimal.ZERO, BigDecimal::add)
                     .setScale(2, RoundingMode.HALF_UP);
             b.setAdjustmentsTotal(adjTotal);
-            BigDecimal preRound = nz(b.getGrossAmount()).add(adjTotal);
+            BigDecimal preRound = nz(b.getGrossAmount())
+                    .subtract(nz(b.getSavingsAmount()))
+                    .add(adjTotal);
             BigDecimal rounded = preRound.setScale(0, RoundingMode.HALF_UP);
             BigDecimal roundOff = rounded.subtract(preRound).setScale(2, RoundingMode.HALF_UP);
             b.setRoundOff(roundOff);
