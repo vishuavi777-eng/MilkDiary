@@ -3,7 +3,6 @@ package com.rudrainfotech.milkdiary.i18n;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.Locale;
