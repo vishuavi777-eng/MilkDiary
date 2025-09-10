@@ -25,27 +25,61 @@ public class SavingPeriodService {
         public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
     }
 
-    /** Return the current period for an outlet (stub data). */
+    /** Return the current active period. */
     public SavingPeriod getCurrentPeriod(Outlet outlet) {
-        SavingPeriod p = new SavingPeriod();
-        p.setStartDate(LocalDate.now().withDayOfMonth(1));
-        p.setEndDate(LocalDate.now());
-        return p;
+        return Tx.tx(s -> {
+            com.rudrainfotech.milkdiary.entity.SavingPeriod p = s.createQuery(
+                            "from SavingPeriod p where p.endDate is null",
+                            com.rudrainfotech.milkdiary.entity.SavingPeriod.class)
+                    .setMaxResults(1)
+                    .uniqueResult();
+            if (p == null) return null;
+            SavingPeriod sp = new SavingPeriod();
+            sp.setStartDate(p.getStartDate());
+            sp.setEndDate(p.getEndDate());
+            return sp;
+        });
     }
 
     /** Update period dates for the given outlet. */
     public void updatePeriod(Outlet outlet, LocalDate start, LocalDate end) {
-        // persistence logic would go here
+        Tx.txVoid(s -> {
+            com.rudrainfotech.milkdiary.entity.SavingPeriod p = getActivePeriod(s);
+            p.setStartDate(start);
+            p.setEndDate(end);
+        });
     }
 
     /** Close the current period for the outlet. */
     public void closePeriod(Outlet outlet) {
-        // closing logic would go here
+        Tx.txVoid(s -> {
+            com.rudrainfotech.milkdiary.entity.SavingPeriod p = s.createQuery(
+                            "from SavingPeriod p where p.endDate is null",
+                            com.rudrainfotech.milkdiary.entity.SavingPeriod.class)
+                    .setMaxResults(1)
+                    .uniqueResult();
+            if (p != null && p.getEndDate() == null) {
+                p.setEndDate(LocalDate.now());
+            }
+        });
     }
 
     /** Initialize the next period for the outlet. */
     public void initNextPeriod(Outlet outlet) {
-        // initialization logic would go here
+        Tx.txVoid(s -> {
+            com.rudrainfotech.milkdiary.entity.SavingPeriod last = s.createQuery(
+                            "from SavingPeriod p order by p.startDate desc",
+                            com.rudrainfotech.milkdiary.entity.SavingPeriod.class)
+                    .setMaxResults(1)
+                    .uniqueResult();
+            if (last != null && last.getEndDate() == null) return; // still active
+            com.rudrainfotech.milkdiary.entity.SavingPeriod next = new com.rudrainfotech.milkdiary.entity.SavingPeriod();
+            LocalDate start = (last != null && last.getEndDate() != null)
+                    ? last.getEndDate().plusDays(1)
+                    : LocalDate.now();
+            next.setStartDate(start);
+            s.persist(next);
+        });
     }
 
 
