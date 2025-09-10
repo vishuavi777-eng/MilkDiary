@@ -457,6 +457,9 @@ public class MemberBillPdfService {
         }
 
         for (DailyMilkEntry e : entries) {
+            // Ensure latest rate/amount before tallying
+            dailySvc.computeRateAndAmount(e.getOutlet(), e);
+
             java.time.LocalDate dt = e.getDate();
             DayRow dr = map.computeIfAbsent(dt, k -> { DayRow x=new DayRow(); x.date=k; return x; });
 
