@@ -89,6 +89,16 @@ app/data/milkdiary.db
 
 Current note: the Gradle test task is wired, but the repository still needs proper `src/test/java` test coverage.
 
+### Seed Demo Data
+
+The repository includes a deterministic demo seed for portfolio/testing use:
+
+```bash
+sqlite3 app/data/milkdiary.db < scripts/seed-demo.sql
+```
+
+The seed creates a demo outlet, members, rate plan, daily entries for May 2026, monthly bills, adjustments, savings, and a cap lock.
+
 ## Repository Layout
 
 ```text

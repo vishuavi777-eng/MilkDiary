@@ -93,3 +93,4 @@ jacoco.exec
 reports/
 generated/
 app/backups
+app/data/backups/

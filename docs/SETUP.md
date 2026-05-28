@@ -31,6 +31,16 @@ gradlew.bat :app:run
 ./gradlew :app:test
 ```
 
+## Seed Demo Data
+
+To reset the local database to the portfolio demo dataset:
+
+```bash
+sqlite3 app/data/milkdiary.db < scripts/seed-demo.sql
+```
+
+The demo data uses May 2026 and includes an active outlet, six members, cow/buffalo rate formulas, daily milk entries, monthly bills, savings records, two bill adjustments, and one cap lock.
+
 ## Database
 
 During development the app uses:
