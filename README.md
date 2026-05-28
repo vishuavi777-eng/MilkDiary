@@ -134,6 +134,8 @@ docs/          Portfolio documentation
 
 The short product and engineering case study is available at [docs/CASE_STUDY.md](docs/CASE_STUDY.md).
 
+The architecture document also includes an ERP-style module diagram showing how daily collection, billing, savings, reporting, settings, locks, and backups connect.
+
 ## Roadmap
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the most useful next improvements, including test coverage, migration hardening, and packaging.

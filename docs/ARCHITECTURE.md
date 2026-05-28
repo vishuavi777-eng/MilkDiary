@@ -37,6 +37,31 @@ erDiagram
     MEMBER ||--o{ MEMBER_SAVING : owns
 ```
 
+## ERP Module View
+
+MilkDiary is scoped like a small dairy ERP module: the outlet is the operating unit, members are suppliers, daily collection feeds billing, and billing feeds savings, reports, and audit/backup workflows.
+
+```mermaid
+flowchart TD
+    Outlet["Outlet Master"] --> Members["Member / Supplier Master"]
+    Outlet --> RatePlans["Rate Plan Management"]
+    Members --> Daily["Daily Milk Collection"]
+    RatePlans --> Daily
+    Daily --> Billing["Monthly Billing"]
+    Billing --> Adjustments["Bill Adjustments"]
+    Billing --> Savings["Member Savings"]
+    Billing --> Reports["PDF Bills / Cap Reports"]
+    Daily --> Summary["Outlet Summary"]
+    Billing --> Summary
+    Settings["App Settings"] --> Reports
+    Settings --> Backup["Backup / Restore"]
+    Locks["Cap & Bill Locks"] --> Daily
+    Locks --> Billing
+    Audit["Audit Log"] --- Daily
+    Audit --- Billing
+    Audit --- Backup
+```
+
 ## Billing Flow
 
 ```mermaid
