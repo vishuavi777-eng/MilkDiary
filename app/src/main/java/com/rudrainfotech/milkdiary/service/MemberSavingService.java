@@ -78,6 +78,17 @@ public class MemberSavingService {
                     .setMaxResults(1)
                     .uniqueResult();
 
+            // If there is no active saving period we cannot update the
+            // initial amount. Previously the code would continue and create
+            // a MemberSaving entity with a null period which violates the
+            // non-null constraint on the `period` field and resulted in a
+            // PropertyValueException. Simply aborting the update when no
+            // period exists avoids the exception and mirrors the behaviour
+            // of other service methods such as {@code disburseForOutlet}.
+            if (period == null) {
+                return;
+            }
+
             com.rudrainfotech.milkdiary.entity.MemberSaving db = s.createQuery(
                             "from MemberSaving ms where ms.member = :m and ms.period = :p",
                             com.rudrainfotech.milkdiary.entity.MemberSaving.class)
