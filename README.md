@@ -38,6 +38,20 @@ The project is written as a practical business application rather than a demo CR
 - Outlet Summary: view operational totals and export summaries
 - Settings: language, backup path, admin options, report metadata
 
+## Screenshots
+
+| Daily Entries | Monthly Billing |
+| --- | --- |
+| ![Daily Entries](docs/screenshots/milk-daily-entries.png) | ![Monthly Billing](docs/screenshots/milk-billing.png) |
+
+| Members | Outlet Summary |
+| --- | --- |
+| ![Members](docs/screenshots/milk-members.png) | ![Outlet Summary](docs/screenshots/milk-outlet-summary.png) |
+
+| Settings |
+| --- |
+| ![Settings](docs/screenshots/milk-settings.png) |
+
 ## Architecture
 
 ```mermaid

@@ -76,3 +76,28 @@ Important operational data lives under `app/data` during local development. In a
 - Harden SQLite foreign-key initialization and migration validation before production distribution.
 - Move mutable runtime files out of the repository tree.
 - Package the app with `jlink`/`jpackage` for non-developer installation.
+
+## Recommended Refactor Path
+
+The current architecture is acceptable for a portfolio desktop app: UI, service, entity, reporting, and database concerns are already separated enough to understand. I would not rewrite the whole app into a larger framework.
+
+The useful next refactors are smaller and higher impact:
+
+1. Introduce view models for large JavaFX screens such as `DailyEntriesView` and `MonthlyBillingView`.
+2. Move billing aggregation into a pure calculation component that can be unit-tested without Hibernate.
+3. Add repository/query classes only where service methods are becoming query-heavy.
+4. Replace mutable runtime database files in the repository with seed scripts and a generated local DB.
+5. Add integration tests using a temporary SQLite database and Flyway migrations.
+6. Package the app with `jpackage` once the runtime data directory is moved outside the source tree.
+
+Target shape:
+
+```mermaid
+flowchart LR
+    View["JavaFX View"] --> VM["View Model / Screen State"]
+    VM --> AppService["Application Service"]
+    AppService --> Domain["Billing/Rate Domain Logic"]
+    AppService --> Repo["Repository Queries"]
+    Repo --> Hibernate["Hibernate + SQLite"]
+    AppService --> Report["Report Export"]
+```

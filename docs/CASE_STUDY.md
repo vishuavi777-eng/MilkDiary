@@ -24,6 +24,16 @@ MilkDiary was built to centralize those workflows in a desktop application that 
 
 The application uses JavaFX for a desktop operator interface, SQLite for local persistence, Hibernate for domain mapping, and Flyway for database migrations. The domain is organized around outlets, members, daily milk entries, rate plans, monthly bills, adjustments, cap locks, and savings periods.
 
+## Product Screens
+
+| Workflow | Screenshot |
+| --- | --- |
+| Daily milk entry and rate calculation | ![Daily Entries](screenshots/milk-daily-entries.png) |
+| Monthly billing and member-wise totals | ![Monthly Billing](screenshots/milk-billing.png) |
+| Member management | ![Members](screenshots/milk-members.png) |
+| Outlet performance summary | ![Outlet Summary](screenshots/milk-outlet-summary.png) |
+| Application settings and backup controls | ![Settings](screenshots/milk-settings.png) |
+
 ## Engineering Decisions
 
 | Decision | Reason |
@@ -63,5 +73,5 @@ MilkDiary demonstrates a complete local business application: not just screens, 
 - Add automated regression tests for billing and rate resolution
 - Package a production installer
 - Move runtime data into a user application directory
-- Add screenshots and sample anonymized reports to the portfolio README
+- Add sample anonymized PDF reports to the portfolio README
 - Add import/export workflows for members and entries
