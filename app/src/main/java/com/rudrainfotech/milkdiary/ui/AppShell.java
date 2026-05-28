@@ -40,23 +40,11 @@ public class AppShell extends BorderPane {
         Locale.setDefault(locale);
         I18n.init(locale);
 
-        System.out.println("UI_LANG=" + locale);
-        String probe = com.rudrainfotech.milkdiary.i18n.I18n.t("menu.daily");
-        System.out.println("menu.daily = " + probe);
-        System.out.println("codepoints = " + probe.codePoints()
-                .mapToObj(cp -> String.format("U+%04X", cp))
-                .collect(java.util.stream.Collectors.joining(" ")));
-
-
         // 2) Load fonts for Marathi
         javafx.scene.text.Font.loadFont(getClass().getResourceAsStream("/fonts/NotoSansDevanagari-Regular.ttf"), 12);
         javafx.scene.text.Font.loadFont(getClass().getResourceAsStream("/fonts/NotoSansDevanagari-Bold.ttf"), 12);
 
-        System.out.println("Fonts contain Noto Sans Devanagari? " +
-                javafx.scene.text.Font.getFamilies().contains("Noto Sans Devanagari"));
-
         setLeft(buildNav());
-        setCenter(welcome());
         setBottom(buildStatusBar());
         refreshStatus();
     }
@@ -182,10 +170,7 @@ public class AppShell extends BorderPane {
         nav.setPrefWidth(220);
         nav.getStyleClass().add("nav-pane");
 
-        // start with a neutral center and no selection (or pick a sensible default)
-        setCenter(welcome());
-        // If you want a default, uncomment:
-        // dailyBtn.setSelected(true);
+        dailyBtn.setSelected(true);
 
         return nav;
     }
@@ -305,7 +290,7 @@ public class AppShell extends BorderPane {
     private void refreshStatus() {
         Outlet o = outletSvc.getActiveOutlet();
         statusLeft.setText(o == null ? "Outlet: (none)" : "Outlet: " + safe(o.getName()));
-        statusRight.setText("Tips: ⌘, Settings • ⌘B Backup (from main window)");
+        statusRight.setText("Shortcuts: Ctrl/Cmd+, Settings | Ctrl/Cmd+B Backup");
     }
 
     private void alert(Alert.AlertType t, String msg) {
